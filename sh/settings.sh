@@ -9,3 +9,6 @@ SPADES_CMD=/opt/SPAdes-3.9.0-Linux/bin/spades.py
 SSAKE_CMD=/opt/ssake_v3.8.4/SSAKE
 VELVETH_CMD=/opt/velvet_1.2.10/velveth
 VELVETG_CMD=/opt/velvet_1.2.10/velvetg
+
+# path to ART used for generating reads
+ART_CMD=/opt/art_bin_MountRainier/art_illumina
