@@ -35,7 +35,7 @@ public class MongeElkanEmbeddedDistance<T extends EmbeddedObject<K, V> & Unorien
         double distance = 0.0;
 
         // here we will store the sequences by the difference from the currently searched one
-        List<List<T>> byDiffs = CollectionUtils.nLists(maxEmbeddedDistance);
+        List<List<T>> byDiffs = CollectionUtils.nLists(maxEmbeddedDistance + 1);
         
         for (T aElem : new IteratorWrapper<>(a.embeddedIterator())) {
             // initialize to find the least distant read in the other read set
