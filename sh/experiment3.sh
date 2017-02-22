@@ -102,8 +102,7 @@ done
 
 
 # and run the experiment
-#TODO change it to the recently build code
-java -cp ~/Dropbox/doktorske/research/reads/code/reads/dist/reads.jar rysavpe1.reads.experiment2.RunExperiment < "$folder/settings.txt" #&>/dev/null
+java -cp target/readsJournal-1.0.jar cz.cvut.fel.ida.reads.experiment.RunExperiment < "$folder/settings.txt" #&>/dev/null
 
 # finish with averaging the results
-java -cp ~/Dropbox/doktorske/research/reads/code/reads/dist/reads.jar rysavpe1.reads.experiment2.cubes.GenerateCubes < "$folder/settings.txt"
+java -cp target/readsJournal-1.0.jar cz.cvut.fel.ida.reads.experiment.GenerateCubes < "$folder/settings.txt"
