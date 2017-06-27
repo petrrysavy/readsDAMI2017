@@ -1,4 +1,3 @@
-
 package cz.cvut.fel.ida.reads.model;
 
 import cz.cvut.fel.ida.reads.util.AbstractIterator;
@@ -7,29 +6,32 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 /**
+ * Iterator over all children of the root node in a tree.
  *
  * @author Petr Ryšavý
- * @param <T>
+ * @param <T> Type of values stored in the tree.
  */
-public class TreeNodeIterator<T> extends AbstractIterator<TreeNode<T>>
-{
+public class TreeNodeIterator<T> extends AbstractIterator<TreeNode<T>> {
+
+    /** Queue that holds not-yet-explored nodes. */
     private final Deque<TreeNode<T>> deque;
 
-    public TreeNodeIterator(TreeNode<T> node)
-	{
+    /**
+     * Creates new iterator.
+     * @param node The starting point. This will be the first element to return.
+     */
+    public TreeNodeIterator(TreeNode<T> node) {
         this.deque = new LinkedList<>();
         deque.add(node);
-	}
+    }
 
     @Override
-    public boolean hasNext()
-    {
+    public boolean hasNext() {
         return !deque.isEmpty();
     }
 
     @Override
-    public TreeNode<T> next()
-    {
+    public TreeNode<T> next() {
         if (deque.isEmpty())
             throw new NoSuchElementException("Iterated over all elements.");
 

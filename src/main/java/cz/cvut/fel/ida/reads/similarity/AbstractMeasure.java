@@ -1,9 +1,10 @@
 package cz.cvut.fel.ida.reads.similarity;
 
 /**
+ * Measure is a distance and similarity calculator.
  *
  * @author Petr Ryšavý
- * @param <T>
+ * @param <T> Type of compared objects.
  */
 public abstract class AbstractMeasure<T> implements DistanceCalculator<T, Double>, SimilarityCalculator<T, Double> {
 

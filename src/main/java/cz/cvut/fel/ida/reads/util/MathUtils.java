@@ -1,15 +1,22 @@
 package cz.cvut.fel.ida.reads.util;
 
 /**
+ * A utility class for mathematics functions.
  *
  * @author Petr Ryšavý
  */
 public final class MathUtils {
 
+    /** Do not let anybody to instantiate the class. */
     private MathUtils() {
-
     }
 
+    /**
+     * Finds maximum from an array.
+     * @param arr Array of numbers.
+     * @return The maximum.
+     * @throws ArrayIndexOutOfBoundsException When array is empty.
+     */
     public static int max(int... arr) {
         int max = arr[0];
         for (int i = 1; i < arr.length; i++)
@@ -18,6 +25,12 @@ public final class MathUtils {
         return max;
     }
 
+    /**
+     * Finds minimum from an array.
+     * @param arr Array of numbers.
+     * @return The minimum.
+     * @throws ArrayIndexOutOfBoundsException When array is empty.
+     */
     public static int min(int... arr) {
         int min = arr[0];
         for (int i = 1; i < arr.length; i++)
@@ -26,12 +39,25 @@ public final class MathUtils {
         return min;
     }
 
+    /**
+     * Finds minimum of three values.
+     * @param a First value.
+     * @param b Second value.
+     * @param c Third value.
+     * @return The minimum of {@code a}, {@code b} and {@code c}.
+     */
     public static int min(int a, int b, int c) {
         if (a <= b && a <= c)
             return a;
         return b <= c ? b : c;
     }
 
+    /**
+     * Finds minimum from an array.
+     * @param arr Array of numbers.
+     * @return The minimum.
+     * @throws ArrayIndexOutOfBoundsException When array is empty.
+     */
     public static double min(double... arr) {
         double min = arr[0];
         for (int i = 1; i < arr.length; i++)
@@ -40,6 +66,11 @@ public final class MathUtils {
         return min;
     }
 
+    /**
+     * Finds index of maximum element in an array.
+     * @param arr Array of numbers.
+     * @return The index of maximum.
+     */
     public static int maxIndex(int... arr) {
         if (arr.length == 0)
             return -1;
@@ -51,16 +82,36 @@ public final class MathUtils {
         return maxIndex;
     }
 
+    /**
+     * Finds minimum of three values.
+     * @param a First value.
+     * @param b Second value.
+     * @param c Third value.
+     * @return The minimum of {@code a}, {@code b} and {@code c}.
+     */
     public static double min(double a, double b, double c) {
         if (a <= b && a <= c)
             return a;
         return b <= c ? b : c;
     }
-    
+
+    /**
+     * Finds minimum of four values.
+     * @param a First value.
+     * @param b Second value.
+     * @param c Third value.
+     * @param d Fourth value.
+     * @return The minimum of {@code a}, {@code b}, {@code c} and {@code d}.
+     */
     public static double min(double a, double b, double c, double d) {
         return Math.min(Math.min(a, b), Math.min(c, d));
     }
 
+    /**
+     * Sums all numbers in an array. Does not check overflows/underflows.
+     * @param vec Array of numbers.
+     * @return Sum of elements.
+     */
     public static int sum(int[] vec) {
         int sum = 0;
         for (int i : vec)
@@ -68,6 +119,11 @@ public final class MathUtils {
         return sum;
     }
 
+    /**
+     * Sums all numbers in an array. Does not check overflows/underflows.
+     * @param vec Array of numbers.
+     * @return Sum of elements.
+     */
     public static double sum(double[] vec) {
         double sum = 0;
         for (double i : vec)
@@ -75,12 +131,25 @@ public final class MathUtils {
         return sum;
     }
 
+    /**
+     * Sums two arrays of numbers and stores the result in the first argument.
+     * @param target The first summand and the place where we will store the
+     * result.
+     * @param toAdd The summand.
+     * @return Pointer to {@code target}.
+     */
     public static int[] addTo(int[] target, int[] toAdd) {
         for (int i = 0; i < target.length; i++)
             target[i] += toAdd[i];
         return target;
     }
 
+    /**
+     * Sums squares of all numbers in an array. Does not check
+     * overflows/underflows.
+     * @param vec Array of numbers.
+     * @return Sum of squares of elements.
+     */
     public static int sumSquares(int[] vec) {
         int sum = 0;
         for (int i : vec)
@@ -88,6 +157,12 @@ public final class MathUtils {
         return sum;
     }
 
+    /**
+     * Sums squares of all numbers in an array. Does not check
+     * overflows/underflows.
+     * @param vec Array of numbers.
+     * @return Sum of squares of elements.
+     */
     public static int sumSquares(int[][] matrix) {
         int sum = 0;
         for (int[] vec : matrix)

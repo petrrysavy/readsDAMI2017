@@ -7,11 +7,16 @@ import java.nio.file.Path;
 import java.util.List;
 
 /**
+ * The reference. Calculates the given distance.
  *
  * @author Petr Ryšavý
  */
 public class ReferenceMethod extends SimilarityMethod<Sequence> {
 
+    /**
+     * The reference method.
+     * @param distance Distance to be used.
+     */
     public ReferenceMethod(DistanceCalculator<Sequence, ? extends Number> distance) {
         super(distance, "reference");
     }

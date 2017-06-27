@@ -5,16 +5,18 @@ import cz.cvut.fel.ida.reads.similarity.DistanceCalculator;
 import java.util.Set;
 
 /**
+ * A simple class that compares two multisets by taking distance of two most
+ * similar objects in the sets.
  *
  * @author Petr Ryšavý
- * @param <T>
+ * @param <T> The type of objects in the multisets.
  */
-public class BestMatchDistance<T> extends AbstractMongeElkan<T>
-{
+public class BestMatchDistance<T> extends AbstractMongeElkan<T> {
+
     public BestMatchDistance(DistanceCalculator<T, ? extends Number> innerDistance) {
         super(innerDistance);
     }
-    
+
     @Override
     public boolean isSymmetric() {
         return innerDistance.isSymmetric();

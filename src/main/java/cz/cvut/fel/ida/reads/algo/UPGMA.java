@@ -8,8 +8,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
+ * The UPGMA hierarchical clustering algorithm.
  *
  * @author Petr Ryšavý
+ * @param <T> Type of clustered objects.
  */
 public class UPGMA<T> extends AbstractHierarchicalClustering<T> {
 
@@ -21,7 +23,7 @@ public class UPGMA<T> extends AbstractHierarchicalClustering<T> {
         Arrays.fill(size, 0, values.length, 1);
 
         // calculate the cluster-cluster distances
-        final TwiceIndexedMap<Integer, Double> distanceMap = calculateDistanceMap(values, distanceMatrix);
+        final TwiceIndexedMap<Integer, Double> distanceMap = calculateDistanceMap(distanceMatrix);
 
         int newIndex = nodeList.size();
 

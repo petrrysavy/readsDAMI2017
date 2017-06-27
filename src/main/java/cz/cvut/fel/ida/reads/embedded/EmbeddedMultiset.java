@@ -3,8 +3,7 @@ package cz.cvut.fel.ida.reads.embedded;
 import java.util.Iterator;
 
 /**
- * Jde o Java rozhraní, které
- *
+ * Interface that defines multiset that is embedded to some other space.
  * @author Petr Ryšavý
  * @param <T> Type of the embedded object that is used.
  * @param <K> The original space key.
@@ -12,10 +11,17 @@ import java.util.Iterator;
  */
 public interface EmbeddedMultiset<T extends EmbeddedObject<K, V>, K, V> extends Iterable<K> {
 
+    /** Returns the size of the multiset.
+     * @return Size of the multiset. */
     public int size();
 
+    /** The count of a particular object. Should be done in the original space.
+     * @param o Object to count.
+     * @return Count of {@code o} */
     public int count(Object o);
-	
-	public Iterator<T> embeddedIterator();
+
+    /** Iterator of the embedded values.
+     * @return Iterator in the embedded space. */
+    public Iterator<T> embeddedIterator();
 
 }

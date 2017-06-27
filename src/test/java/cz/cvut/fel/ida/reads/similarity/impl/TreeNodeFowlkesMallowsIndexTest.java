@@ -33,7 +33,7 @@ public class TreeNodeFowlkesMallowsIndexTest {
     public void testGetSimilarity() {
         HierarchicalTreeNode<Integer> a = buildTree(1, 3, 5, 2, 4);
         HierarchicalTreeNode<Integer> b = buildTree(1, 4, 3, 2, 5);
-        final TreeNodeFowlkesMallowsIndex<Integer> calc = new TreeNodeFowlkesMallowsIndex<>(new FowlkesMallowsIndex<Integer>());
+        final TreeNodeFowlkesMallowsIndex<Integer> calc = new TreeNodeFowlkesMallowsIndex<>();
         calc.setK(2);
         assertThat(calc.getSimilarity(a, b), CoreMatchers.is(IsCloseTo.closeTo(0.25, 1e-11)));
     }
@@ -42,7 +42,7 @@ public class TreeNodeFowlkesMallowsIndexTest {
     public void testGetSimilarity2() {
         HierarchicalTreeNode<Integer> a = buildTree(1, 2, 3, 4, 5);
         HierarchicalTreeNode<Integer> b = buildTree(1, 2, 3, 4, 5);
-        final TreeNodeFowlkesMallowsIndex<Integer> calc = new TreeNodeFowlkesMallowsIndex<>(new FowlkesMallowsIndex<Integer>());
+        final TreeNodeFowlkesMallowsIndex<Integer> calc = new TreeNodeFowlkesMallowsIndex<>();
         calc.setK(2);
         assertThat(calc.getSimilarity(a, b), CoreMatchers.is(IsCloseTo.closeTo(1.0, 1e-11)));
     }
@@ -51,7 +51,7 @@ public class TreeNodeFowlkesMallowsIndexTest {
     public void testGetSimilarity3() {
         HierarchicalTreeNode<Integer> a = buildTree(5, 4, 1, 2, 3);
         HierarchicalTreeNode<Integer> b = buildTree(1, 2, 3, 4, 5);
-        final TreeNodeFowlkesMallowsIndex<Integer> calc = new TreeNodeFowlkesMallowsIndex<>(new FowlkesMallowsIndex<Integer>());
+        final TreeNodeFowlkesMallowsIndex<Integer> calc = new TreeNodeFowlkesMallowsIndex<>();
         calc.setK(2);
         assertThat(calc.getSimilarity(a, b), CoreMatchers.is(IsCloseTo.closeTo(0.5, 1e-11)));
     }

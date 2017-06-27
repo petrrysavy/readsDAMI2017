@@ -34,31 +34,89 @@ import java.util.Random;
 import java.util.StringTokenizer;
 
 /**
+ * The class that wraps settings loaded from the file. This file describes the
+ * whole experiments in terms of used dataset, coverage etc.
  *
  * @author Petr Ryšavý
  */
-public class ExperimentSettings {
+public final class ExperimentSettings {
 
+    /** Folder where reference files are stored. */
     public final Path referenceFolder;
+    /** List of file names. */
     public final List<String> fileList;
+    /** Coverage values that will be used in the experiment. */
     public final List<Double> coverageValues;
+    /** Read length values that will be used. */
     public final List<Integer> readLengthValues;
+    /** If {@code true}, then reads will be generated under assumption of cyclic
+     * genome. */
     public final boolean cyclic;
+    /** If {@code true} reads could be arbitrarily reversed. This means that no
+     * we do not stick to 5' to 3' order. */
     public final boolean shouldReverse;
+    /** If {@code true} then we assume that we do not know read strand. */
     public final boolean shouldComplement;
+    /** Seed for random generators. */
     public final long seed;
+    /** The random generator. */
     public final Random random;
+    /** Folder with results, assembly files and read bags. */
     public final Path targetFolder;
+    /** If {@code true} then assembly should be computed. */
     public final boolean runAssembly;
+    /** List of assemblers. */
     public final List<String> assemblers;
+    /** List of method names. This list is used for method generation. */
     public final List<String> methods;
+    /** Timelimit for each method to finish. It is set in minutes. */
     public final int timelimit; // in minutes
+    /** Outgroup sequence. Should be in the list of files. */
     public final String outgroup;
+    /** Number of threads that will evaluate the particular methods. */
     public final int nThreads;
+    /** Type of files used for storing read bags. FASTA or FASTQ. */
     private final FileType bagsFileType;
+    /** Selected read length. If this is positive then the experiment should be
+     * run only once with selected read length and coverage. */
     private int selectRL;
+    /** Selected coverage. If this is positive then the experiment should be run
+     * only once with selected read length and coverage. */
     private double selectCoverage;
 
+    /**
+     * Creates new instance of the class.
+     * @param referenceFolder Folder where reference files are stored.
+     * @param fileList List of file names.
+     * @param coverageValues Coverage values that will be used in the
+     * experiment.
+     * @param readLengthValues Read length values that will be used.
+     * @param cyclic If {@code true}, then reads will be generated under
+     * assumption of cyclic genome.
+     * @param shouldReverse If {@code true} reads could be arbitrarily reversed.
+     * This means that no we do not stick to 5' to 3' order.
+     * @param shouldComplement If {@code true} then we assume that we do not
+     * know read strand.
+     * @param seed Seed for random generators.
+     * @param targetFolder Folder with results, assembly files and read bags.
+     * @param runAssembly If {@code true} then assembly should be computed.
+     * @param assemblers List of assemblers.
+     * @param methods List of method names. This list is used for method
+     * generation.
+     * @param timelimit Timelimit for each method to finish. It is set in
+     * minutes.
+     * @param outgroup Outgroup sequence. Should be in the list of files.
+     * @param nThreads Number of threads that will evaluate the particular
+     * methods.
+     * @param bagFileType Type of files used for storing read bags. FASTA or
+     * FASTQ.
+     * @param selectRL Selected read length. If this is positive then the
+     * experiment should be run only once with selected read length and
+     * coverage.
+     * @param selectCoverage Selected coverage. If this is positive then the
+     * experiment should be run only once with selected read length and
+     * coverage.
+     */
     public ExperimentSettings(Path referenceFolder,
             List<String> fileList,
             List<Double> coverageValues,
@@ -98,6 +156,9 @@ public class ExperimentSettings {
         select(selectRL, selectCoverage);
     }
 
+    /** Loads settings from the system input.
+     * @return The settings.
+     * @throws IOException If reading fails. */
     public static ExperimentSettings readFromSystemIn() throws IOException {
         // initialize
         Path referenceFolder = Paths.get("");
@@ -198,6 +259,8 @@ public class ExperimentSettings {
         }
         if (outgroup == null)
             outgroup = fileList.get(0);
+        if (!fileList.contains(outgroup))
+            Utils.dieWithMessage("Outgroup must be in list of files.");
         return new ExperimentSettings(referenceFolder, fileList, coverageValues,
                 readLengthValues, cyclic, shouldReverse, shouldComplement, seed,
                 targetFolder, runAssembly, assemblers, methods, timelimit, outgroup,
@@ -215,6 +278,12 @@ public class ExperimentSettings {
             return innerDistance;
     }
 
+    /**
+     * Gets list with properly initialized methods.
+     * @param readLength Read length for the experiment.
+     * @param coverage Coverage for the experiment.
+     * @return The list of methods.
+     */
     public List<Method> getMethods(final int readLength, final double coverage) { // TODO split
         // and now generate the methods
         List<Method> methodsL = new ArrayList<>();
@@ -272,6 +341,13 @@ public class ExperimentSettings {
         return methodsL;
     }
 
+    /**
+     * Gets method if the condition is {@code true}. Otherwise returns a dummy
+     * method that fails on every dataset.
+     * @param m Method to get.
+     * @param condition Condition that must be satisfied.
+     * @return Method {@code m} or a dummy method.
+     */
     private Method getMethodIf(Method m, boolean condition) {
         if (condition)
             return m;
@@ -279,18 +355,31 @@ public class ExperimentSettings {
             return new UnsupportedMethod(m.getName());
     }
 
+    /**
+     * Gets the reference.
+     * @return The reference.
+     */
     public Method getReferenceMethod() {
         return new ReferenceMethod(getOrientedDistance(shouldReverse, shouldComplement, new EditDistance()));
     }
 
+    /** Gets list of coverages to use. If nothing is selected, all values are
+     * used, otherwise only the selected one.
+     * @return Coverage list. */
     public List<Double> getCoverage() {
         return selectCoverage <= 0 ? coverageValues : Arrays.asList(selectCoverage);
     }
 
+    /** Gets list of read lengths to use. If nothing is selected, all values are
+     * used, otherwise only the selected one.
+     * @return Read length list. */
     public List<Integer> getReadLength() {
         return selectRL <= 0 ? readLengthValues : Arrays.asList(selectRL);
     }
 
+    /** Selects a particular read length and coverage for the experiment.
+     * @param selectReadLength Read length.
+     * @param selectCoverage Coverage. */
     public void select(int selectReadLength, double selectCoverage) {
         if (selectReadLength > 0 && !readLengthValues.contains(selectReadLength))
             throw new IllegalArgumentException("Unknown read length value : " + selectReadLength);
@@ -301,6 +390,12 @@ public class ExperimentSettings {
         this.selectRL = selectReadLength;
     }
 
+    /** Gets unique string representation of read length and coverage. This
+     * string shuold be used to name folders for the particular read length and
+     * coverage.
+     * @param readLength The read length.
+     * @param coverage The coverage.
+     * @return Identification of the values. */
     public String getCoverageRLString(int readLength, double coverage) {
         final String coverageSt;
         if (coverage == (long) coverage)
@@ -310,14 +405,27 @@ public class ExperimentSettings {
         return coverageSt + "_" + readLength;
     }
 
+    /** Gets path to reads bag with the experiment for selected read length and
+     * coverage.
+     * @param readLength The read length.
+     * @param coverage The coverage.
+     * @return Folder with reads bags.
+     */
     public Path getBagsFolder(int readLength, double coverage) {
         return targetFolder.resolve("bags_" + getCoverageRLString(readLength, coverage));
     }
 
+    /**
+     * Name of assembly folder for the selected assembler.
+     * @param assembler Assembler name.
+     * @return Name of the folder that contains assembly files.
+     */
     public String getAssemblyFolder(String assembler) {
         return "assembly_" + assembler;
     }
 
+    /** Gets number of threads. If not set, uses the number of cores minus one.
+     * @return Number of threads to use. */
     public int getNThreads() {
         if (nThreads <= 0)
             return Math.max(Runtime.getRuntime().availableProcessors() - 1, 1);

@@ -13,14 +13,22 @@ import java.nio.file.Path;
 import java.util.List;
 
 /**
+ * Utility class for manipulating input and output.
  *
- * @author petr
+ * @author Petr Ryšavý
  */
 public class IOUtils {
 
+    /** Do not let anybody to instantiate the class. */
     private IOUtils() {
     }
 
+    /**
+     * Prints list of lines to a writer.
+     * @param list List of strings to print.
+     * @param out Target writer.
+     * @throws IOException When writing to writer fails.
+     */
     public static void printTo(Iterable<String> list, Writer out) throws IOException {
         for (String st : list) {
             out.write(st);
@@ -29,6 +37,11 @@ public class IOUtils {
         out.flush();
     }
 
+    /**
+     * Checks whether the file can be read. File must not be null, must exist,
+     * it must be a regular file and must be readable.
+     * @param file File to check.
+     */
     public static void checkCanReadFile(Path file) {
         if (file == null)
             throw new IllegalArgumentException("File cannot be null.");
@@ -40,6 +53,11 @@ public class IOUtils {
             throw new IllegalArgumentException("File is not readable");
     }
 
+    /**
+     * Removes extension that is known.
+     * @param filename Name of file, possible with extension.
+     * @return {@code filename}, however without extension.
+     */
     public static String stripKnownExtension(String filename) {
         if (filename.endsWith(".fa") || filename.endsWith(".fq"))
             return filename.substring(0, filename.length() - 3);
@@ -48,6 +66,12 @@ public class IOUtils {
         return filename;
     }
 
+    /**
+     * Creates new loader for group of reads based on known file type.
+     * @param files List of files.
+     * @param filetype Type of reads in the files FASTA or FASTQ.
+     * @return Loader for the specified files.
+     */
     public static ReadBagGroupLoader newReadBagGroupLoader(List<Path> files, FileType filetype) {
         switch (filetype) {
             case FASTA:
@@ -55,7 +79,7 @@ public class IOUtils {
             case FASTQ:
                 return new FASTQMultipleFileLoader(files);
             default:
-                throw new IllegalArgumentException("Unknown filetype : "+filetype);
+                throw new IllegalArgumentException("Unknown filetype : " + filetype);
         }
     }
 }

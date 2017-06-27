@@ -6,6 +6,8 @@ import cz.cvut.fel.ida.reads.model.Sequence;
 import cz.cvut.fel.ida.reads.similarity.AbstractMeasure;
 
 /**
+ * This is just an adapter class that is used if we need to use a measure
+ * between multisets where distance of reads bags would be expected.
  *
  * @author Petr Ryšavý
  */

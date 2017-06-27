@@ -5,9 +5,10 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
+ * An immutable set that contains all elements.
  *
  * @author petr
- * @param <T>
+ * @param <T> The type of objects.
  */
 public class AllValuesSet<T> implements Set<T> {
 

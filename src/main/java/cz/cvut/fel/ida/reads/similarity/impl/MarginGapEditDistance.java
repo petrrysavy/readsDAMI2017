@@ -6,16 +6,30 @@ import cz.cvut.fel.ida.reads.similarity.MarginGapPenaulty;
 import cz.cvut.fel.ida.reads.util.MathUtils;
 
 /**
+ * Edit distance calculation with different dealing with margin gaps.
  *
  * @author Petr Ryšavý
  */
 public class MarginGapEditDistance implements DistanceCalculator<Sequence, Double> {
 
+    /** This is how much we get if we align two same symbols. */
     private final double matchPremium;
+    /** This is how much we pay for aligning different symbols. */
     private final double mismatchPenalty;
+    /** This is what we pay for a gap. */
     private final double gapPenalty;
+    /** This tells us how much we pay for gaps at margins. */
     private final MarginGapPenaulty marginGapPenalty;
 
+    /**
+     * Creates new edit distance.
+     * @param matchPremium This is how much we get if we align two same symbols.
+     * @param mismatchPenalty This is how much we pay for aligning different
+     * symbols.
+     * @param gapPenalty This is what we pay for a gap.
+     * @param marginGapPenalty This tells us how much we pay for gaps at
+     * margins.
+     */
     public MarginGapEditDistance(double matchPremium, double mismatchPenalty, double gapPenalty, MarginGapPenaulty marginGapPenalty) {
         this.matchPremium = matchPremium;
         this.mismatchPenalty = mismatchPenalty;

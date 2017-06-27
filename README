@@ -1,0 +1,13 @@
+This project contains code used in the paper "Estimating Sequence Similarity
+from Read Sets for Clustering Next-Generation Sequencing data" by Petr Ryšavý
+and Filip Železný.
+
+To obtain the results from the paper, you need to do the following:
+ 1. Download and install assembly algorithms. In the paper, we used abyss,
+    edena, ssake, spades and velvet.
+ 2. Download ART program for sequencing simulation.
+ 3. Go to sh/settings.sh file and change path to assembly algorithms, ART and
+    human reference genome. (the last two are optional)
+ 4. cd sh
+ 5. run following: experiment1.sh, experiment3.sh, experiment4.sh, uncomment
+    configuration that fit your needs

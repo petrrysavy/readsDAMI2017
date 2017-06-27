@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * A main class used for generating cubes and averaging of results for multiple
+ * experiments based on a set of parameters.
  *
- * @author petr
+ * @author Petr Ryšavý
  */
 public class GenerateCubes {
 
@@ -75,6 +77,11 @@ public class GenerateCubes {
         }
     }
 
+    /**
+     * Checks whether a parameter (for example run-time) should be long.
+     * @param headerName Name of the parameter.
+     * @return {@code true} if the parameter should be stored as natural number.
+     */
     protected static boolean isLong(String headerName) {
         return headerName.equals(Result.NUMBER_OF_DATA) || headerName.equals(Result.FINISHED) || headerName.equals(Result.OUT_OF);
     }

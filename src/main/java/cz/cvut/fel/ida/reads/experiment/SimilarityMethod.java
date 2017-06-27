@@ -8,17 +8,26 @@ import cz.cvut.fel.ida.reads.model.HierarchicalTreeNode;
 import cz.cvut.fel.ida.reads.similarity.DistanceCalculator;
 
 /**
+ * A method that uses distance calculator to build tree.
  *
  * @author Petr Ryšavý
- * @param <T>
+ * @param <T> The type of clustered objects.
  */
 public abstract class SimilarityMethod<T> implements Method<T> {
 
-    private final DistanceCalculator<T, ? extends Number> similarity;
+    /** The distance measure that calculates the distance matrix. */
+    private final DistanceCalculator<T, ? extends Number> distance;
+    /** Name of the method. */
     private final String name;
 
+    /**
+     * New method instance.
+     * @param similarity The distance measure that calculates the distance
+     * matrix.
+     * @param name Name of the method.
+     */
     public SimilarityMethod(DistanceCalculator<T, ? extends Number> similarity, String name) {
-        this.similarity = similarity;
+        this.distance = similarity;
         this.name = name;
     }
 
@@ -29,7 +38,7 @@ public abstract class SimilarityMethod<T> implements Method<T> {
 
     @Override
     public double[][] getDistanceMatrix(T[] array) {
-        return similarity.getDistanceMatrix(array, array);
+        return distance.getDistanceMatrix(array);
     }
 
     @Override

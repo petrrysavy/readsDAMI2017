@@ -37,19 +37,13 @@ import java.util.Set;
  */
 public class HashMultiset<T> extends AbstractMultiset<T> implements Cloneable {
 
-    /**
-     * This map holds the state of the multiset.
-     */
+    /** This map holds the state of the multiset. */
     private HashMap<T, Integer> map;
 
-    /**
-     * Size of this multiset.
-     */
+    /** Size of this multiset. */
     private int size = 0;
 
-    /**
-     * Constructs an empty multiset.
-     */
+    /** Constructs an empty multiset. */
     public HashMultiset() {
         map = new HashMap<>();
     }
@@ -120,6 +114,10 @@ public class HashMultiset<T> extends AbstractMultiset<T> implements Cloneable {
         return size;
     }
 
+    /**
+     * Gets number of unique elements in this multiset.
+     * @return Number of elements ignoring duplicates.
+     */
     public int uniqueSize() {
         return map.size();
     }
@@ -140,7 +138,7 @@ public class HashMultiset<T> extends AbstractMultiset<T> implements Cloneable {
      * object.
      */
     @Override
-    @SuppressWarnings({"unchecked", "element-type-mismatch"})
+    @SuppressWarnings("unchecked")
     public boolean remove(Object o) {
         Integer count = count(o);
         if (count == 0)
@@ -150,7 +148,7 @@ public class HashMultiset<T> extends AbstractMultiset<T> implements Cloneable {
         if (count > 1)
             map.put((T) o, count - 1);
         else
-            map.remove(o);
+            map.remove((T) o);
         return true;
     }
 
@@ -162,9 +160,7 @@ public class HashMultiset<T> extends AbstractMultiset<T> implements Cloneable {
         return add(e, 1);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean add(T e, int count) {
         if (count <= 0)
@@ -177,17 +173,13 @@ public class HashMultiset<T> extends AbstractMultiset<T> implements Cloneable {
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Set<T> toSet() {
         return new HashSet<>(map.keySet());
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public HashMultiset<T> union(Multiset<T> other) {
         HashMultiset<T> copy = this.clone();
@@ -196,9 +188,7 @@ public class HashMultiset<T> extends AbstractMultiset<T> implements Cloneable {
         return copy;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int count(Object o) {
         @SuppressWarnings("element-type-mismatch")
@@ -208,9 +198,7 @@ public class HashMultiset<T> extends AbstractMultiset<T> implements Cloneable {
         return count;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("element-type-mismatch")
     public boolean contains(Object o) {
@@ -245,9 +233,7 @@ public class HashMultiset<T> extends AbstractMultiset<T> implements Cloneable {
         return map.hashCode();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("CloneDeclaresCloneNotSupported")
     protected HashMultiset<T> clone() {
@@ -262,35 +248,21 @@ public class HashMultiset<T> extends AbstractMultiset<T> implements Cloneable {
         }
     }
 
-    /**
-     * A multiset iterator that wraps iterator of the backing hash map.
-     */
+    /** A multiset iterator that wraps iterator of the backing hash map. */
     private class MultisetIterator implements Iterator<T> {
 
-        /**
-         * Iterator of the hash map.
-         */
+        /** Iterator of the hash map. */
         private final Iterator<Entry<T, Integer>> iterator = map.entrySet().iterator();
-        /**
-         * Current entry.
-         */
+        /** Current entry. */
         private Entry<T, Integer> current = null;
-        /**
-         * How many times we have returned an element of the current entry.
-         */
+        /** How many times we have returned an element of the current entry. */
         private int count = 0;
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public boolean hasNext() {
             return iterator.hasNext() || (current != null && count < current.getValue());
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public T next() {
             // this happens only after the first call.

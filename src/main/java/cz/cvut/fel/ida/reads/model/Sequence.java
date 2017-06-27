@@ -31,16 +31,15 @@ import java.util.Arrays;
  */
 public class Sequence implements CharSequence {
 
-    /**
-     * The sequence to be stored.
-     */
+    /** The sequence to be stored. */
     private final char[] sequence;
-    /**
-     * Description.
-     */
+    /** Description. */
     private final String description;
+    /** Location of the sequence. */
     private final Path file;
+    /** Complementary sequence. */
     private Sequence complement;
+    /** Reversed sequence. */
     private Sequence reverse;
 
     /**
@@ -85,21 +84,21 @@ public class Sequence implements CharSequence {
         return description;
     }
 
+    /**
+     * Gets the location of file from which this sequence was read.
+     * @return File with the sequence.
+     */
     public Path getFile() {
         return file;
     }
 
-    /**
-     * {@inheritDoc} This method returns number of symbols in this sequence.
-     */
+    /** {@inheritDoc} This method returns number of symbols in this sequence. */
     @Override
     public int length() {
         return sequence.length;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public char charAt(int index) {
         if (index < 0 || index > sequence.length)
@@ -107,13 +106,15 @@ public class Sequence implements CharSequence {
         return sequence[index];
     }
 
+    /**
+     * Tests whether this sequence is empty.
+     * @return {@code true} if length of this sequence is 0.
+     */
     public boolean isEmpty() {
         return length() == 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Sequence subSequence(int start, int end) {
         if (start < 0 || start > end || end > sequence.length)
@@ -124,10 +125,24 @@ public class Sequence implements CharSequence {
         return new Sequence(arr, description + " [subsequence " + start + '-' + end + ']');
     }
 
+    /**
+     * Gets subsequence given its starting position and target length.
+     * @param start Location of the first character in this sequence.
+     * @param length Length of the sequence.
+     * @return The subsequnce.
+     */
     public Sequence subSequence2(int start, int length) {
         return subSequence(start, start + length);
     }
 
+    /**
+     * Gets subsequence under assumption that the sequence is formed by a
+     * cyclical DNA molecule. If the subsequence goes over the last character,
+     * it continues with the first.
+     * @param start Location of the first character in this sequence.
+     * @param length Length of the sequence.
+     * @return The subsequnce.
+     */
     public Sequence cyclicSubsequence(int start, int length) {
         start = start % sequence.length;
         final char[] arr = new char[length];
@@ -140,6 +155,10 @@ public class Sequence implements CharSequence {
         return new Sequence(arr, description + " [cyclic subsequence " + start + " of length " + length + ']');
     }
 
+    /**
+     * Gets the reverse sequence.
+     * @return Sequence with nucleotides from the last symbol to the first one.
+     */
     public Sequence reverse() {
         if (this.reverse == null) {
             this.reverse = reverseCopy();
@@ -154,10 +173,20 @@ public class Sequence implements CharSequence {
         return this.reverse;
     }
 
+    /**
+     * Copies the sequence into a new one which has nucleotides from the last
+     * symbol to the first.
+     * @return A reversed sequence, however the hardcopy.
+     */
     public Sequence reverseCopy() {
         return new Sequence(ArrayUtils.reversedCopy(sequence), description + ", reversed", file);
     }
 
+    /**
+     * Gets the complementary sequence.
+     * @return Sequence with nucleotides replaced by their complementary
+     * nucleotides.
+     */
     public Sequence complement() {
         if (this.complement == null) {
             this.complement = complementCopy();
@@ -172,14 +201,30 @@ public class Sequence implements CharSequence {
         return this.complement;
     }
 
+    /**
+     * Copies the sequence into a new one which has nucleotides replaced by
+     * their complements.
+     * @return A complementary sequence, however the hardcopy.
+     */
     public Sequence complementCopy() {
         return new Sequence(Utils.complementaryCopy(sequence), description + ", complement", file);
     }
 
+    /**
+     * Gets the complementary reversed sequence. This is how would looks
+     * sequence look like if it was read from the complementary strand.
+     * @return Sequence with nucleotides replaced by their complementary
+     * nucleotides and in reversed order.
+     */
     public Sequence reverseComplement() {
         return this.reverse().complement();
     }
 
+    /**
+     * Copies the sequence into a new one which has nucleotides replaced by
+     * their complements and in reversed order.
+     * @return A complementary reverse, however the hardcopy.
+     */
     public Sequence reverseComplementCopy() {
         final char[] reversed = ArrayUtils.reversedCopy(sequence);
         Utils.makeComplementary(reversed);
@@ -221,7 +266,7 @@ public class Sequence implements CharSequence {
     }
 
     /**
-     * {@inheritDoc} Two sequences are equal if the contain the same symbols.
+     * {@inheritDoc} Two sequences are equal if they contain the same symbols.
      * Descriptions do not matter.
      */
     @Override

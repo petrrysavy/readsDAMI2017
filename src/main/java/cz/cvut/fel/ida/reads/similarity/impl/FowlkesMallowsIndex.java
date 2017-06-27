@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * Fowlkes-Mallows index is used for comparing two clusterings.
  *
  * @author Petr Ryšavý
- * @param <T>
+ * @param <T> The type of objects in the clustering.
+ * @see http://wildfire.stat.ucla.edu/pdflibrary/fowlkes.pdf
  */
 public class FowlkesMallowsIndex<T> extends AbstractMeasure<List<Set<T>>> {
 

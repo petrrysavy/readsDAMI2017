@@ -3,6 +3,8 @@ package cz.cvut.fel.ida.reads.experiment;
 import java.util.Comparator;
 
 /**
+ * Comparator for datasets. Should be able to compare two datasets no matter
+ * whether they are represented as sequences/reads bags or assembled contigs.
  *
  * @author Petr Ryšavý
  */

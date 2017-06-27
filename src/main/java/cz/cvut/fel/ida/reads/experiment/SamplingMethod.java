@@ -6,14 +6,21 @@ import java.nio.file.Path;
 import java.util.List;
 
 /**
+ * Method that takes as argument another method and downsamples the number of
+ * reads.
  *
- * @author petr
+ * @author Petr Ryšavý
  */
 public class SamplingMethod implements Method<ReadsBag> {
 
+    /** A method that is decorated by the sampling. */
     private final Method<ReadsBag> decoratedMethod;
+    /** The sampling ratio. */
     private final double ratio;
 
+    /** Creates a new method that enhances another reads bag method by sampling.
+     * @param decoratedMethod A method that is decorated by the sampling.
+     * @param ratio The sampling ratio. */
     public SamplingMethod(Method<ReadsBag> decoratedMethod, double ratio) {
         this.decoratedMethod = decoratedMethod;
         this.ratio = ratio;

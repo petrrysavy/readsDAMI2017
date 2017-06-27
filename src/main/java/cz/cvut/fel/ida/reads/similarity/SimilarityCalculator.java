@@ -4,18 +4,38 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * A class that is capable of similarity calculation.
+ *
  * @author Petr Ryšavý
- * @param <T>
- * @param <U>
+ * @param <T> The type of compared objects.
+ * @param <U> The numerical value of the similarity.
  */
 public interface SimilarityCalculator<T, U extends Number> extends Measure {
 
+    /**
+     * Calculates the similarity.
+     * @param a The first object.
+     * @param b The second object.
+     * @return Similarity of {@code a} and {@code b} (in this order).
+     */
     public U getSimilarity(T a, T b);
 
+    /**
+     * Gets matrix of similarities between each pair of objects.
+     * @param a List of first arguments.
+     * @param b List of second arguments.
+     * @return Matrix that contains similarity of i-th element from the first
+     * list and j-th from the second.
+     */
     public default double[][] getSimilarityMatrix(T[] a, T[] b) {
         return getSimilarityMatrix(Arrays.asList(a), Arrays.asList(b));
     }
 
+    /**
+     * Gets square matrix of similarities.
+     * @param values Values to compare.
+     * @return Similarity of i-th and j-th element of the list.
+     */
     public default double[][] getSimilarityMatrix(T[] values) {
         final boolean isSymmetric = isSymmetric();
 
@@ -30,6 +50,13 @@ public interface SimilarityCalculator<T, U extends Number> extends Measure {
         return similarity;
     }
 
+    /**
+     * Gets matrix of similarities between each pair of objects.
+     * @param aList List of first arguments.
+     * @param bList List of second arguments.
+     * @return Matrix that contains similarity of i-th element from the first
+     * list and j-th from the second.
+     */
     public default double[][] getSimilarityMatrix(List<T> aList, List<T> bList) {
         final boolean isSymmetric = isSymmetric() && aList.equals(bList);
 

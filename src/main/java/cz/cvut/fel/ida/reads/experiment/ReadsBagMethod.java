@@ -8,19 +8,23 @@ import java.nio.file.Path;
 import java.util.List;
 
 /**
+ * A method based on calculating similarity on reads bags.
  *
  * @author Petr Ryšavý
  */
 public class ReadsBagMethod extends SimilarityMethod<ReadsBag> {
 
+    /** File format of the input. */
     private final FileType bagsFormat;
 
-    public ReadsBagMethod(AbstractMeasure<ReadsBag> similarity, String name) {
-        this(similarity, name, FileType.FASTA);
-    }
-
-    public ReadsBagMethod(AbstractMeasure<ReadsBag> similarity, String name, FileType bagsFormat) {
-        super(similarity, name);
+    /**
+     * Instantiates the method.
+     * @param distance Distance measure.
+     * @param name Name of the method.
+     * @param bagsFormat Type of the data files.
+     */
+    public ReadsBagMethod(AbstractMeasure<ReadsBag> distance, String name, FileType bagsFormat) {
+        super(distance, name);
         this.bagsFormat = bagsFormat;
     }
 

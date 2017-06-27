@@ -7,17 +7,35 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * This class takes hierarchical tree and places the root in the middle of the
+ * edge connecting an outgroup node with the rest of the tree.
  *
  * @author Petr Ryšavý
  */
 public class OutgroupRerootify<T> {
 
+    /**
+     * The tree to rerootify.
+     */
     private final HierarchicalTreeNode<T> tree;
 
+    /**
+     * Construct new instance based on the tree.
+     *
+     * @param tree
+     */
     public OutgroupRerootify(HierarchicalTreeNode<T> tree) {
         this.tree = tree;
     }
 
+    /**
+     * Places the root in the middle of the edge connecting {@code value} with
+     * the rest of the tree.
+     *
+     * @param value The outgroup.
+     * @param comparator The comparator of values.
+     * @return Tree with the new root.
+     */
     public HierarchicalTreeNode<T> outgroopReRootify(T value, Comparator<T> comparator) {
         // we need to start from the root, therefore transpose the list first
         final List<TreeNode<T>> path = new TransposedList<>(tree.tracePath(value, comparator));

@@ -10,16 +10,29 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
+ * Class that is capable of running a method and fetching the result. To obtain
+ * the result and run the method within a time limit, you need only to
+ * instantiate this class and call {@link #invoke() } method.
  *
- * @author petr
+ * @author Petr Ryšavý
  */
 public class MethodCallable implements Callable<ExtendedResult> {
 
+    /** Settings of the experiment. */
     private final ExperimentSettings settings;
+    /** Location of the experiment. */
     private final Path experimentFolder;
+    /** Method that will be evaluated. */
     private final Method m;
+    /** Fetched results. */
     private final ExtendedResult r;
 
+    /**
+     * Creates new callable that will run thread with a method.
+     * @param settings Settings of the experiment.
+     * @param m Method to be tested.
+     * @param experimentFolder Location of the experiment.
+     */
     public MethodCallable(ExperimentSettings settings, Method m, Path experimentFolder) {
         this.settings = settings;
         this.m = m;
@@ -43,10 +56,15 @@ public class MethodCallable implements Callable<ExtendedResult> {
 
     }
 
+    /**
+     * Invokes the method and waits for it to finish up to a given time limit.
+     * @return The result of the run.
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
     public ExtendedResult invoke() throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        MethodCallable callable = new MethodCallable(settings, m, experimentFolder);
-        Future<ExtendedResult> future = executor.submit(callable);
+        Future<ExtendedResult> future = executor.submit(this);
 
         try {
             return future.get(settings.timelimit, TimeUnit.MINUTES);

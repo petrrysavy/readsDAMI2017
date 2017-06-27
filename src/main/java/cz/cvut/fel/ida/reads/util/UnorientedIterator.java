@@ -4,15 +4,26 @@ import cz.cvut.fel.ida.reads.model.UnorientedObject;
 import java.util.Iterator;
 
 /**
+ * Iterator that returns for a sequence also its complement, reverse and
+ * reversed complement.
  *
  * @author Petr Ryšavý
- * @param <T>
+ * @param <T> Type of the sequence.
  */
 public class UnorientedIterator<T extends UnorientedObject<T>> extends AbstractIterator<T> {
+
+    /** The wrapped iterator. */
     private final Iterator<T> wrapped;
+    /** Current element to return. */
     private T current;
+    /** Position - what shall we return of the current sequence now. */
     private int pos;
 
+    /**
+     * Creates a new unoriented iterator based on another iterator.
+     * @param wrapped We decorate this iterator by enhancing it by complement,
+     * reverse and reversed complement.
+     */
     public UnorientedIterator(Iterator<T> wrapped) {
         this.wrapped = wrapped;
         pos = 4;

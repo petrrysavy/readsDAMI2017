@@ -10,8 +10,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
+ * The neighbor-joining clustering algorithm.
  *
  * @author Petr Ryšavý
+ * @param <T> Type of clustered objects.
  */
 public class NeighborJoining<T> extends AbstractHierarchicalClustering<T> {
 
@@ -19,12 +21,12 @@ public class NeighborJoining<T> extends AbstractHierarchicalClustering<T> {
     public HierarchicalTreeNode<T> buildTree(T[] values, double[][] distanceMatrix) {
         final Map<Integer, HierarchicalTreeNode<T>> nodeList = buildInitialClustering(values);
 
-//        // distance from cluster i to all other clusters
-//        // i.e. sum_(all clusters C') D(C_i, C')
+        // distance from cluster i to all other clusters
+        // i.e. sum_(all clusters C') D(C_i, C')
         final Map<Integer, Double> distFromAll = new HashMap<>();
 
         // calculate the cluster-cluster distances
-        final TwiceIndexedMap<Integer, Double> distanceMap = calculateDistanceMap(values, distanceMatrix);
+        final TwiceIndexedMap<Integer, Double> distanceMap = calculateDistanceMap(distanceMatrix);
 
         // calculate the sums used for u(C) calculation
         for (int i = 0; i < values.length; i++) {

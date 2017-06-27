@@ -30,10 +30,9 @@ import java.nio.file.Path;
  */
 public class ReadsBag extends HashMultiset<Sequence> {
 
-    /**
-     * Description of the bag of reads.
-     */
+    /** Description of the bag of reads. */
     private final String description;
+    /** File that stored the reads. */
     private final Path file;
 
     /**
@@ -46,12 +45,24 @@ public class ReadsBag extends HashMultiset<Sequence> {
         this(initialCapacity, description, null);
     }
 
+    /**
+     * Constructs a new bag of reads.
+     *
+     * @param initialCapacity Initial capacity of the multiset.
+     * @param description Description, a comment or {@code null}.
+     * @param file Location of the reads.
+     */
     public ReadsBag(int initialCapacity, String description, Path file) {
         super(initialCapacity);
         this.description = description;
         this.file = file;
     }
 
+    /**
+     * Constructs a new bag of reads.
+     *
+     * @param initialCapacity Initial capacity of the multiset.
+     */
     public ReadsBag(int initialCapacity) {
         this(initialCapacity, null);
     }
@@ -65,6 +76,10 @@ public class ReadsBag extends HashMultiset<Sequence> {
         return description;
     }
 
+    /**
+     * Gets the location of the bag of reads.
+     * @return File that stores the data.
+     */
     public Path getFile() {
         return file;
     }
@@ -98,6 +113,11 @@ public class ReadsBag extends HashMultiset<Sequence> {
         return bag;
     }
 
+    /**
+     * Samples the bag of reads with the given ratio.
+     * @param ratio The relative count of reads to include.
+     * @return Bag of reads with the sample.
+     */
     public ReadsBag sample(double ratio) {
         final ReadsBag sampled = new ReadsBag((int) (this.size() * ratio) + 10, description + " sampled", file);
         for (Sequence s : this)

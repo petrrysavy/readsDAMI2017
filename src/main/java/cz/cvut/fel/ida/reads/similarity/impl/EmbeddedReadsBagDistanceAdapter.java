@@ -7,9 +7,12 @@ import cz.cvut.fel.ida.reads.model.Sequence;
 import cz.cvut.fel.ida.reads.similarity.AbstractMeasure;
 
 /**
+ * This is just an adapter class that is used if we need to use a measure
+ * between embedded multisets where distance of embedded reads bags would be
+ * expected.
  *
  * @author Petr Ryšavý
- * @param <T>
+ * @param <T> The target space of the embedding.
  */
 public class EmbeddedReadsBagDistanceAdapter<T> extends AbstractMeasure<EmbeddedReadsBag<T>> {
 

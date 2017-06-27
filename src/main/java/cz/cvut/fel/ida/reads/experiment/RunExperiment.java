@@ -30,7 +30,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * This main class generates read sets using a simple configuration file.
+ * This main class that runs a whole experiment based on settings provided in
+ * system input.
  *
  * @author Petr Ryšavý
  */
@@ -206,7 +207,7 @@ public class RunExperiment {
 
     @SuppressWarnings("unchecked")
     public static void compareTrees(HierarchicalTreeNode expected, HierarchicalTreeNode actual, String prefix, int count, Result r) {
-        TreeNodeFowlkesMallowsIndex<String> fmIndex = new TreeNodeFowlkesMallowsIndex<>(new FowlkesMallowsIndex<>());
+        TreeNodeFowlkesMallowsIndex<String> fmIndex = new TreeNodeFowlkesMallowsIndex<>();
         final HierarchicalTreeNode<String> expectedSt = toDatasetNameTree(expected);
         final HierarchicalTreeNode<String> actualSt = toDatasetNameTree(actual);
 

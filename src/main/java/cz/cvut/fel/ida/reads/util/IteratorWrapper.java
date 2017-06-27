@@ -3,8 +3,8 @@ package cz.cvut.fel.ida.reads.util;
 import java.util.Iterator;
 
 /**
- * The wrapper that enables to use iterator in for loop directly. The code shows how
- * to do that.
+ * The wrapper that enables to use iterator in for loop directly. The code shows
+ * how to do that.
  * <pre>
  * for(Type t : new IteratorWrapper<>(iterator))
  * </pre>
@@ -12,25 +12,23 @@ import java.util.Iterator;
  * @param <T> The type of the iterator.
  * @author Petr Ryšavý
  */
-public class IteratorWrapper<T> implements Iterable<T>
-{
-	/**
-	 * The stored refference to the iterator.
-	 */
-	private final Iterator<T> iterator;
+public class IteratorWrapper<T> implements Iterable<T> {
 
-	/**
-	 * Creates new iterator wrapper.
-	 * @param iterator The iterator to wrap.
-	 */
-	public IteratorWrapper(final Iterator<T> iterator)
-	{
-		this.iterator = iterator;
-	}
+    /**
+     * The stored refference to the iterator.
+     */
+    private final Iterator<T> iterator;
 
-	@Override
-	public Iterator<T> iterator()
-	{
-		return this.iterator;
-	}
+    /**
+     * Creates new iterator wrapper.
+     * @param iterator The iterator to wrap.
+     */
+    public IteratorWrapper(final Iterator<T> iterator) {
+        this.iterator = iterator;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return this.iterator;
+    }
 }

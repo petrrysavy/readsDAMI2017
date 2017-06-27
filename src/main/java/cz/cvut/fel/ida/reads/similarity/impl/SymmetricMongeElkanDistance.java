@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A symmetric Monge-Elkan distance. This is calculated by taking average of
+ * both directions.
  *
  * @author Petr Ryšavý
- * @param <T>
+ * @param <T> Type of objects in the multisets.
  */
 public class SymmetricMongeElkanDistance<T> extends AbstractMongeElkan<T> {
 

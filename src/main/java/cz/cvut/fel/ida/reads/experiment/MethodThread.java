@@ -6,13 +6,30 @@ import cz.cvut.fel.ida.reads.util.ArrayUtils;
 import cz.cvut.fel.ida.reads.util.TicTac;
 import java.nio.file.Path;
 
+/**
+ * A thread that contains all code responsible for method evaluation and
+ * fetching the result.
+ * @author Petr Ryšavý
+ */
 class MethodThread extends Thread {
 
+    /** Settings of the experiment. */
     private final ExperimentSettings settings;
+    /** Location of the experiment. */
     private final Path experimentFolder;
+    /** Method that will be evaluated. */
     private final Method m;
+    /** Fetched results. */
     private final ExtendedResult r;
 
+    /**
+     * Instantiates a thread that will run a method and fetch all its
+     * characteristics like runtime, resulting trees and distance matrix.
+     * @param settings Settings of the experiment.
+     * @param m Method to be tested.
+     * @param experimentFolder Location of the experiment.
+     * @param result Here we will store the result.
+     */
     public MethodThread(ExperimentSettings settings, Method m, Path experimentFolder, ExtendedResult result) {
         this.settings = settings;
         this.m = m;

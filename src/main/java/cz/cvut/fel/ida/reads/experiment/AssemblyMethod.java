@@ -10,11 +10,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Method based on assembly. Uses the longest contig from each sequence file.
  *
  * @author Petr Ryšavý
  */
 public class AssemblyMethod extends SimilarityMethod<Sequence> {
 
+    /**
+     * Constructs a new instance of the method.
+     * @param innerDistance The distance measure used in calculations.
+     * @param name Name of the method.
+     */
     public AssemblyMethod(DistanceCalculator<Sequence, ? extends Number> innerDistance, String name) {
         super(innerDistance, name);
     }
@@ -46,6 +52,10 @@ public class AssemblyMethod extends SimilarityMethod<Sequence> {
         }
     }
 
+    /**
+     * Returns {@code true} if all sequences were assembled. That means that
+     * none of the sequences is empty. {@inheritDoc }
+     */
     @Override
     public boolean areDataCorrect(Sequence[] data) {
         for (Sequence s : data)

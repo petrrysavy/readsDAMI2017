@@ -13,20 +13,34 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 /**
+ * Class used for loading results from output text files.
  *
- * @author petr
+ * @author Petr Ryšavý
  */
 public class LoadResults {
 
+    /** List of headers noting measurement type, i.e. time/correlation, etc. */
     private String[] headers;
+    /** Settings with experiment description. */
     private final ExperimentSettings settings;
+    /** Indices for rows that should be considered. Not all results are useful. */
     private final Set<Integer> rowIndices;
 
+    /**
+     * Creates new object responsible for loading results.
+     * @param settings Configuration of the experiment.
+     * @param rowIndices Rows that should be used, i.e. methods that are
+     * interresting for us. */
     public LoadResults(ExperimentSettings settings, Set<Integer> rowIndices) {
         this.rowIndices = rowIndices;
         this.settings = settings;
     }
 
+    /**
+     * Loads all results based on the experiment settings.
+     * @return Map from read length and coverage to results of various methods.
+     * @throws IOException When reading fails.
+     */
     public Map<Pair<Integer, Double>, List<Result>> loadResults() throws IOException {
         loadHeader(getResultFile(settings.getReadLength().get(0), settings.getCoverage().get(0)));
 
@@ -42,10 +56,22 @@ public class LoadResults {
         return headers;
     }
 
+    /**
+     * Gets location of the file with result for selected coverage and read
+     * length.
+     * @param readLength Read length.
+     * @param coverage Coverage.
+     * @return Location of the result.
+     */
     private Path getResultFile(int readLength, double coverage) {
         return settings.getBagsFolder(readLength, coverage).resolve("result").resolve("result.dat");
     }
 
+    /**
+     * Reads the header line with measurement types like time, correlation, etc.
+     * @param resultFile Location of the file.
+     * @throws IOException When reading fails.
+     */
     private void loadHeader(Path resultFile) throws IOException {
         BufferedReader br = Files.newBufferedReader(resultFile);
         final StringTokenizer st = new StringTokenizer(br.readLine());
@@ -59,6 +85,12 @@ public class LoadResults {
         headersL.toArray(headers);
     }
 
+    /**
+     * Reads the whole result of an experiment.
+     * @param resultFile File with the result.
+     * @return Parsed results.
+     * @throws IOException When I/O fail happens.
+     */
     private List<Result> loadResult(Path resultFile) throws IOException {
         List<Result> results = new ArrayList<>(rowIndices.size());
         final List<String> lines = Files.readAllLines(resultFile);

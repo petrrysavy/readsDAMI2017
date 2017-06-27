@@ -2,12 +2,26 @@ package cz.cvut.fel.ida.reads.experiment;
 
 import cz.cvut.fel.ida.reads.model.HierarchicalTreeNode;
 
+/**
+ * Result class that stores some additional information about the experiment.
+ * @author Petr Ryšavý
+ */
 public class ExtendedResult extends Result {
 
+    /** The tree built by UPGMA algorithm. */
     private HierarchicalTreeNode upgmaTree;
+    /** The tree build by Neighbor-joining algorithm. */
     private HierarchicalTreeNode njTree;
+    /** Matrix of distances. */
     private double[] distances;
 
+    /**
+     * Constructs new result instance.
+     * @param methodName Name of the method which is captured by this result.
+     * @param upgmaTree The tree built by UPGMA algorithm.
+     * @param njTree The tree build by Neighbor-joining algorithm.
+     * @param distances Matrix of distances.
+     */
     public ExtendedResult(String methodName, HierarchicalTreeNode upgmaTree, HierarchicalTreeNode njTree, double[] distances) {
         super(methodName);
         this.upgmaTree = upgmaTree;

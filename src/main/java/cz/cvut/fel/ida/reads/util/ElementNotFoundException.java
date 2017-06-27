@@ -1,23 +1,24 @@
 package cz.cvut.fel.ida.reads.util;
 
 /**
+ * Exception marking that some element was not found.
  *
  * @author Petr Ryšavý
  */
 public class ElementNotFoundException extends RuntimeException {
 
     /**
-     * Vytvoří novou instanci <code>ElementNotFoundException</code> bez detailní
-     * zprávy.
+     * Creates a new instance of <code>ElementNotFoundException</code> without a
+     * detailed message.
      */
     public ElementNotFoundException() {
     }
 
     /**
-     * Konstruktor tvořící novou instanci <code>ElementNotFoundException</code>
-     * se specifikovanou zprávou.
+     * Creates a new instance of <code>ElementNotFoundException</code> with a
+     * message.
      *
-     * @param msg Detailní zpráva.
+     * @param msg Message.
      */
     public ElementNotFoundException(String msg) {
         super(msg);

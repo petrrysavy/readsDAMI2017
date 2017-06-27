@@ -11,16 +11,29 @@ import java.nio.file.Path;
 import java.util.List;
 
 /**
+ * Method based on embedding reads to another space.
  *
  * @author Petr Ryšavý
- * @param <T>
+ * @param <T> The target space of the embedding.
  */
 public class EmbeddedMethod<T> extends SimilarityMethod<EmbeddedReadsBag> {
 
+    /** Function that calculates the embedding. */
     private final EmbeddingFunction<Sequence, T> embedding;
+    /** File format of the bags. */
     private final FileType bagsFormat;
+    /** If this includes sampling, than this is the ratio of sampled values. */
     private final double samplingRatio;
 
+    /**
+     * Creates new embedded method.
+     * @param similarity This will calculate the distance.
+     * @param embedding Function used for embedding calculation.
+     * @param name Name of this method.
+     * @param bagsFormat Format of reads bag used.
+     * @param samplingRatio How many reads should be considered. Use {@code 1.0}
+     * as default value.
+     */
     public EmbeddedMethod(AbstractMeasure<EmbeddedReadsBag> similarity, EmbeddingFunction<Sequence, T> embedding,
             String name, FileType bagsFormat, double samplingRatio) {
         super(similarity, name);
@@ -43,6 +56,11 @@ public class EmbeddedMethod<T> extends SimilarityMethod<EmbeddedReadsBag> {
         return embeddedBags;
     }
 
+    /**
+     * Calcualtes the embedding of the reads bag. Samples if needed.
+     * @param bag Bag to be loaded.
+     * @return The embedded reads bag.
+     */
     private EmbeddedReadsBag embeddBag(ReadsBag bag) {
         if (samplingRatio > 0.0 && samplingRatio < 1.0)
             bag = bag.sample(samplingRatio);
