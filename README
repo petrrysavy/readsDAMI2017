@@ -1,5 +1,5 @@
 This project contains code used in the paper "Estimating Sequence Similarity
-from Read Sets for Clustering Next-Generation Sequencing data" by Petr Ryšavý
+from Read Sets for Clustering Next-Generation Sequencing Data" by Petr Ryšavý
 and Filip Železný.
 
 To obtain the results from the paper, you need to do the following:
